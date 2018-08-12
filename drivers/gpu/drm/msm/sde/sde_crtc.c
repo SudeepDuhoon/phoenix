@@ -950,10 +950,15 @@ void sde_crtc_commit_kickoff(struct drm_crtc *crtc)
 	if (unlikely(!sde_crtc->num_mixers))
 		return;
 
-	cpu_input_boost_kick();
+	SDE_ATRACE_BEGIN("crtc_commit");
+
 	devfreq_boost_kick(DEVFREQ_MSM_CPUBW);
 
+	is_error = _sde_crtc_prepare_for_kickoff_rot(dev, crtc);
+
 	SDE_ATRACE_BEGIN("crtc_commit");
+
+	cpu_input_boost_kick();
 	list_for_each_entry(encoder, &dev->mode_config.encoder_list, head) {
 		if (encoder->crtc != crtc)
 			continue;
