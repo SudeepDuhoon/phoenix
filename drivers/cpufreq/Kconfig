@@ -144,6 +144,15 @@ config CPU_FREQ_DEFAULT_GOV_SCHEDALUCARD
 
 endchoice
 
+config DYNAMIC_STUNE_BOOST
+        bool "Dynamic SchedTune boosting support"
+        depends on SCHED_TUNE
+        default y
+        help
+          This option extends the SchedTune framework and provides APIs to
+          activate and reset SchedTune boosting from anywhere in the kernel.
+          If unsure, say N.
+
 config CPU_FREQ_GOV_PERFORMANCE
 	tristate "'performance' governor"
 	help
