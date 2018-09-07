@@ -933,10 +933,8 @@ static bool zram_meta_alloc(struct zram *zram, u64 disksize)
 
 	num_pages = disksize >> PAGE_SHIFT;
 	zram->table = vzalloc(num_pages * sizeof(*zram->table));
-	if (!zram->table) {
-		pr_err("Error allocating zram address table\n");
-		goto out_error;
-	}
+	if (!zram->table)
+		return false;
 
 	zram->mem_pool = zs_create_pool(zram->disk->disk_name);
 	if (!zram->mem_pool) {
